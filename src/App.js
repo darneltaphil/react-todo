@@ -1,25 +1,26 @@
-import React, { useEffect, useState, useContext , useCallback } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import Typography from "@material-ui/core/Typography";
-import { AppContext} from "./components/context"
+import { Context} from "./components/contexts/Context"
+import ThemeSwitcher from "./components/ThemeSwitcher";
 const LOCAL_STORAGE_KEY = "react-todo-list-todos";
 
 function App() {
-  const context = useContext(AppContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => { return (false)});
-  const [theme, setTheme] = useState(() => { return ('light')});
+  const [todos, setTodos] = useState([]); 
+  
+  const AppContext = useContext(Context);
+  const [bg, setBg] = useState(AppContext.bg);
+  const [color, setColor] = useState(AppContext.color);
 
-  const [todos, setTodos] = useState([]);
+  const ChangeBackground =(param) => {
+    param === "dark" ? setBg('light') : setBg('dark');
+  }
+  const changeColor =(param) => {
+    param === "white" ? setColor('dark') : setColor('white');
+  }
 
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
-  } , [])
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, [])
   useEffect(() => {
     // fires when app component mounts to the DOM
     const storageTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
@@ -57,17 +58,18 @@ function App() {
   }
 
   return (
-    <AppContext.Provider
- value={{
-   isLoggedIn: isLoggedIn, 
-   theme : 'light',
-   login : login , 
-   logout: logout 
-   }} 
-   >
-        <div className="App">
+    <Context.Provider
+                      value={{
+                    bg : bg,
+                    color : color,
+                    settingBg: ChangeBackground ,
+                    settingColor: changeColor 
+                    }} 
+                    >
+        <div className={`App bg-${bg} text-${color}`}>
+      <ThemeSwitcher  />
           <Typography style={{ padding: 16 }} variant="h1">
-            React Todo
+            ToDo App Challenge
           </Typography>
           <TodoForm addTodo={addTodo} />
           <TodoList
@@ -76,8 +78,7 @@ function App() {
             toggleComplete={toggleComplete}
           />
         </div>
-        
-    </AppContext.Provider>
+    </Context.Provider>
   );
 }
 

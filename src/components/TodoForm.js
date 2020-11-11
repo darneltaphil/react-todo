@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, TextField } from "@material-ui/core";
-//import uuid from "uuid"
+import { Context } from './contexts/Context'
 
 function TodoForm({ addTodo }) {
+  const AppContext = useContext(Context)
   const [todo, setTodo] = useState({
     id: "",
     task: "",
@@ -33,7 +34,7 @@ function TodoForm({ addTodo }) {
         value={todo.task}
         onChange={handleTaskInputChange}
       />
-      <Button type="submit">Submit</Button>
+      <Button type="submit" className={`text-${AppContext.bg === "dark" ? "white" : "dark"} p-2  `}>Submit</Button>
     </form>
   );
 }

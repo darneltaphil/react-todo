@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Checkbox, IconButton, ListItem, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-
+import { Context } from './contexts/Context'
 
 function Todo({ todo, toggleComplete, removeTodo }) {
+  const AppContext = useContext(Context)
+
   function handleCheckboxClick() {
     toggleComplete(todo.id);
   }
@@ -14,7 +16,11 @@ function Todo({ todo, toggleComplete, removeTodo }) {
 
   return (
     <ListItem style={{ display: "flex" }}>
-      <Checkbox checked={todo.completed} onClick={handleCheckboxClick} />
+      <Checkbox 
+          checked={todo.completed} 
+          onClick={handleCheckboxClick}  
+          className={`text-${AppContext.bg === "dark" ? "light" : ""}  `}
+           />
       <Typography
         variant="body1"
         style={{
@@ -24,7 +30,7 @@ function Todo({ todo, toggleComplete, removeTodo }) {
         {todo.task}
       </Typography>
       <IconButton onClick={handleRemoveClick}>
-        <CloseIcon />
+        <CloseIcon  className={`text-${AppContext.bg === "dark" ? "secondary" : "dark"}  `}/>
       </IconButton>
     </ListItem>
   );
