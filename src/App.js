@@ -1,24 +1,83 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState, useContext , useCallback } from "react";
+import "./App.css";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+import Typography from "@material-ui/core/Typography";
+import { AppContext} from "./components/context"
+const LOCAL_STORAGE_KEY = "react-todo-list-todos";
 
 function App() {
+  const context = useContext(AppContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => { return (false)});
+  const [theme, setTheme] = useState(() => { return ('light')});
+
+  const [todos, setTodos] = useState([]);
+
+  const login = useCallback((uid) => {
+    setIsLoggedIn(true);
+  } , [])
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, [])
+  useEffect(() => {
+    // fires when app component mounts to the DOM
+    const storageTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    if (storageTodos) {
+      setTodos(storageTodos);
+    }
+  }, []);
+  
+  useEffect(() => {
+    // fires when todos array gets updated
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+  }, [todos]);
+
+  function addTodo(todo) {
+    // adds new todo to beginning of todos array
+    setTodos([todo, ...todos]);
+  }
+
+  function toggleComplete(id) {
+    setTodos(
+      todos.map(todo => { 
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed
+          };
+        }
+            return todo;
+      })
+    );
+  }
+
+  function removeTodo(id) {
+    setTodos(todos.filter(todo => todo.id !== id));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider
+ value={{
+   isLoggedIn: isLoggedIn, 
+   theme : 'light',
+   login : login , 
+   logout: logout 
+   }} 
+   >
+        <div className="App">
+          <Typography style={{ padding: 16 }} variant="h1">
+            React Todo
+          </Typography>
+          <TodoForm addTodo={addTodo} />
+          <TodoList
+            todos={todos}
+            removeTodo={removeTodo}
+            toggleComplete={toggleComplete}
+          />
+        </div>
+        
+    </AppContext.Provider>
   );
 }
 
