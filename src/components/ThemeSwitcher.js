@@ -26,9 +26,7 @@ function ThemeSwitcher(props) {
         onClick={handleThemeChange}
         className={`bg-${AppContext.bg === "dark" ? "dark" : "light"} p-2 text-${AppContext.color} `}
     >    
-        
-
-           {AppContext.bg === "dark" ? <><FontAwesomeIcon icon={faSun} size="" />  Go Light</> : <><FontAwesomeIcon icon={faMoon} size="" />  Go Dark</>} 
+         {AppContext.bg === "dark" ? <><FontAwesomeIcon icon={faSun} size="" />  Go Light</> : <><FontAwesomeIcon icon={faMoon} size="" />  Go Dark</>} 
 
     </div>
   )
