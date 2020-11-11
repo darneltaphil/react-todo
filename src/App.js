@@ -68,8 +68,14 @@ function App() {
                     >
         <div className={`App bg-${bg} text-${color}`}>
       <ThemeSwitcher  />
+          <div className='bg-success p-3 card text-white'>
+          <Typography style={{ padding: 16 }} variant="caption">
+            This app was built as part of the <br/>fulfilment of conditions to be <br/>considered for the Soronko Mentorship position<br/>
+            <em>Kofi Arnold Akpadji</em>
+          </Typography>
+          </div>
           <Typography style={{ padding: 16 }} variant="h1">
-            ToDo App Challenge
+            ToDo 
           </Typography>
           <TodoForm addTodo={addTodo} />
           <TodoList

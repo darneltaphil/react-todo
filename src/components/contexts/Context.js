@@ -1,8 +1,8 @@
 import {createContext} from 'react';
 
 export const Context = createContext({
-  bg : 'dark',
-  color : 'white',
+  bg : 'light',
+  color : 'dark',
   settingBg: () => { }, 
   settingColor: () => { }, 
 })
