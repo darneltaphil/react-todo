@@ -1,7 +1,8 @@
 import React, { useContext } from "react"
 import {Context} from "./contexts/Context"
-//import Image from "./undraw_dark_mode_2xam.png"
-// import Sun from "../images/sun.svg"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {  faMoon, faPlusCircle, faSun } from "@fortawesome/free-solid-svg-icons"
+
 
 function ThemeSwitcher(props) {
   const AppContext = useContext(Context)
@@ -21,11 +22,13 @@ function ThemeSwitcher(props) {
 }
   return ( 
       
-    <div 
+    <div icon={faPlusCircle} 
         onClick={handleThemeChange}
         className={`bg-${AppContext.bg === "dark" ? "dark" : "light"} p-2 text-${AppContext.color} `}
-    >
-           {AppContext.bg === "dark" ? 'Go Light' : "Go Dark"} 
+    >    
+        
+
+           {AppContext.bg === "dark" ? <><FontAwesomeIcon icon={faSun} size="" />  Go Light</> : <><FontAwesomeIcon icon={faMoon} size="" />  Go Dark</>} 
 
     </div>
   )

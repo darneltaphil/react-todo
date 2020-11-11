@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { Context } from './contexts/Context'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {  faPlus } from "@fortawesome/free-solid-svg-icons"
 
 function TodoForm({ addTodo }) {
   const AppContext = useContext(Context)
@@ -26,7 +28,7 @@ function TodoForm({ addTodo }) {
   }
 
   return (
-    <form className="todo-form" onSubmit={handleSubmit}>
+    <form className="todo-form card-header" onSubmit={handleSubmit} style={{ display: "flex",   flexDirection: 'row',   justifyContent: 'center'  }}>
       <TextField
         label="Task"
         type="text"
@@ -34,7 +36,9 @@ function TodoForm({ addTodo }) {
         value={todo.task}
         onChange={handleTaskInputChange}
       />
-      <Button type="submit" className={`text-${AppContext.bg === "dark" ? "white" : "dark"} p-2  `}>Submit</Button>
+      <Button type="submit" className={`text-${AppContext.bg === "dark" ? "white" : "dark"} p-2  `}>
+        <FontAwesomeIcon title='Add' icon={faPlus} variant='primary' /> 
+      </Button>
     </form>
   );
 }

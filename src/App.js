@@ -66,16 +66,18 @@ function App() {
                     settingColor: changeColor 
                     }} 
                     >
+                     
         <div className={`App bg-${bg} text-${color}`}>
+       <div className='container col-lg-4 '>
       <ThemeSwitcher  />
           <div className='bg-success p-3 card text-white'>
-          <Typography style={{ padding: 16 }} variant="caption">
+          <Typography style={{ padding: 0 }} variant="caption">
             This app was built as part of the <br/>fulfilment of conditions to be <br/>considered for the Soronko Mentorship position<br/>
             <em>Kofi Arnold Akpadji</em>
           </Typography>
           </div>
           <Typography style={{ padding: 16 }} variant="h1">
-            ToDo 
+            ToDo List
           </Typography>
           <TodoForm addTodo={addTodo} />
           <TodoList
@@ -83,6 +85,7 @@ function App() {
             removeTodo={removeTodo}
             toggleComplete={toggleComplete}
           />
+        </div>
         </div>
     </Context.Provider>
   );

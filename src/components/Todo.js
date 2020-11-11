@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { Checkbox, IconButton, ListItem, Typography } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+// import CloseIcon from "@material-ui/icons/Close";
 import { Context } from './contexts/Context'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {  faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 
 function Todo({ todo, toggleComplete, removeTodo }) {
   const AppContext = useContext(Context)
@@ -15,22 +17,24 @@ function Todo({ todo, toggleComplete, removeTodo }) {
   }
 
   return (
-    <ListItem style={{ display: "flex" }}>
+    <ListItem style={{ display: "flex"}}>
       <Checkbox 
           checked={todo.completed} 
           onClick={handleCheckboxClick}  
           className={`text-${AppContext.bg === "dark" ? "light" : ""}  `}
-           />
-      <Typography
-        variant="body1"
+      />
+      <div
+        variant="p"
         style={{
-          textDecoration: todo.completed ? "line-through" : null
+          textDecoration: todo.completed ? "line-through" : null,
+          width : '75%'
         }}
       >
         {todo.task}
-      </Typography>
+      </div>
       <IconButton onClick={handleRemoveClick}>
-        <CloseIcon  className={`text-${AppContext.bg === "dark" ? "secondary" : "dark"}  `}/>
+        <FontAwesomeIcon icon={faTrashAlt}  className={`text-${AppContext.bg === "dark" ? "secondary" : "dark"}  `} />
+        {/* <CloseIcon  className={`text-${AppContext.bg === "dark" ? "secondary" : "dark"}  `}/> */}
       </IconButton>
     </ListItem>
   );
